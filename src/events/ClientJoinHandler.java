@@ -30,7 +30,7 @@ public class ClientJoinHandler {
 	
 	private void handleConnection() {
 		Server.addClient(clientId, client);
-		if(true) {
+		if (true) {
 			displayConnect();
 		}
 	}
@@ -39,9 +39,9 @@ public class ClientJoinHandler {
 		System.out.println(Main.timeStamp() + clientName + " (" + clientUid + ") connected to \"" + channelName + "\".");
 	}
 	
-	private void logConnect() {
+//	private void logConnect() {
 		//TODO: Log to file.
-	}
+//	}
 	
 	private void updateActiveUserList() {
 		

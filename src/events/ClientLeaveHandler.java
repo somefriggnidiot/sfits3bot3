@@ -25,11 +25,11 @@ public class ClientLeaveHandler {
 		targetUid = target.getUniqueIdentifier();
 		reason = this.event.getReasonMessage();
 
-		handleConnection();
+		handleDisconnection();
 	}
 	
-	private void handleConnection() {
-		if(true) { //TODO: Add logic for GUI & Config check.
+	private void handleDisconnection() {
+		if (true) { //TODO: Add logic for GUI & Config check.
 			displayDisconnect(invokerName.equals(""));
 		}
 		//Add additional logic for other actions.
@@ -44,9 +44,9 @@ public class ClientLeaveHandler {
 		}
 	}
 	
-	private void logDisconnect() {
+//	private void logDisconnect() {
 		//TODO: Log to file.
-	}
+//	}
 	
 	private void updateActiveUserList() {
 		

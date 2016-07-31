@@ -34,8 +34,11 @@ import com.github.theholywaffle.teamspeak3.api.wrapper.ClientInfo;
 import com.github.theholywaffle.teamspeak3.api.wrapper.ServerGroup;
 import com.github.theholywaffle.teamspeak3.api.wrapper.VirtualServerInfo;
 
+import events.ChannelDescriptionChangeHandler;
+import events.ChannelEditHandler;
 import events.ClientJoinHandler;
 import events.ClientLeaveHandler;
+import events.ServerEditHandler;
 import events.TextMessageHandler;
 
 public class Server {
@@ -140,199 +143,30 @@ public class Server {
 			public void onClientJoin(ClientJoinEvent newClient)
 			{
 				new ClientJoinHandler(newClient);
-/*				//Check to see if query/stat-checker. If so, ignore.
-				if (newClient.getUniqueClientIdentifier().startsWith("ServerQuery"))
-				{
-					Server.addClient(newClient.getClientId(), new ClientInfo(-1, null));
-					return;
-				}
-				
-				//Set name and ID for later user.
-				String tempName = newClient.getClientNickname();
-				
-				//Get info and add to online client list.
-				CommandFuture<ClientInfo> client = Server.getApiAsync().getClientInfo(newClient.getClientId());
-				CommandFuture<ChannelInfo> channel = Server.getApiAsync().getChannelInfo(newClient.getClientTargetId());
-				
-				client.onSuccess(new CommandFuture.SuccessListener<ClientInfo>() 
-				{
-					@Override
-					public void handleSuccess(ClientInfo cli)
-					{
-						Server.addClient(cli.getId(), cli);
-					}
-				});
-				
-				//Log to console if client still connected and checked to be displayed.
-				if (newClient != null && Gui.showServerActivity())
-				{
-					System.out.println(Main.timeStamp() + tempName + " (" + newClient.getUniqueClientIdentifier() + ") connected to \"" + channel.getUninterruptibly().getName() + "\".");
-				}
-
-				//Send universal welcome message if applicable.
-				if (!WelcomeMessage.getUniversalWelcomeMessage().equals(""))
-				{
-					Server.getApi().sendPrivateMessage(client.getUninterruptibly().getId(), WelcomeMessage.getUniversalWelcomeMessage());
-				}
-
-				//Send welcome message if new user and applicable. 
-		        javax.swing.SwingUtilities.invokeLater(new Runnable() 
-		        {
-		            public void run() 
-		            {
-						if (!WelcomeMessage.getNewUserMessage().equals(""))
-						{
-							for (int csg : client.getUninterruptibly().getServerGroups())
-							{
-								if (csg == Server.getApi().getServerInfo().getDefaultServerGroup())
-								{
-									Server.getApi().sendPrivateMessage(client.getUninterruptibly().getId(), WelcomeMessage.getNewUserMessage());
-								}
-							}
-						}
-		            }
-		        });
-//				if (!WelcomeMessage.getNewUserMessage().equals(""))
-//				{
-//					for (int csg : client.getUninterruptibly().getServerGroups())
-//					{
-//						if (csg == Server.getApi().getServerInfo().getDefaultServerGroup())
-//						{
-//							Server.getApi().sendPrivateMessage(client.getUninterruptibly().getId(), WelcomeMessage.getNewUserMessage());
-//						}
-//					}
-//				}
-
-				//Send welcome message if non-guest and applicable.
-		        javax.swing.SwingUtilities.invokeLater(new Runnable() 
-		        {
-		            public void run() 
-		            {
-						if (!WelcomeMessage.getNormalUserMessage().equals(""))
-						{
-							boolean guest = false;
-							for (int ccg : client.getUninterruptibly().getServerGroups())
-							{
-								if (ccg == Server.getApi().getServerInfo().getDefaultServerGroup())
-								{
-									guest = true;
-									break;
-								}
-							}
-							if (!guest)
-							{
-								Server.getApi().sendPrivateMessage(client.getUninterruptibly().getId(), WelcomeMessage.getNormalUserMessage());
-							}
-						}
-		            }
-		        });
-//				if (!WelcomeMessage.getNormalUserMessage().equals(""))
-//				{
-//					boolean guest = false;
-//					for (int ccg : client.getUninterruptibly().getServerGroups())
-//					{
-//						if (ccg == Server.getApi().getServerInfo().getDefaultServerGroup())
-//						{
-//							guest = true;
-//							break;
-//						}
-//					}
-//					if (!guest)
-//					{
-//						Server.getApi().sendPrivateMessage(client.getUninterruptibly().getId(), WelcomeMessage.getNormalUserMessage());
-//					}
-//				}
-
-				//Send welcome message if bot staff and applicable.
-		        javax.swing.SwingUtilities.invokeLater(new Runnable() 
-		        {
-		            public void run() 
-		            {
-						if (!WelcomeMessage.getBotStaffMessage().equals(""))
-						{
-							boolean staff = false;
-							for (int ccg : client.getUninterruptibly().getServerGroups())
-							{
-								if (ccg == Config.getBotAdminGroup() || ccg == Config.getBotOwnerGroup())
-								{
-									staff = true;
-									break;
-								}
-							}
-							if (staff)
-							{
-								Server.getApi().sendPrivateMessage(client.getUninterruptibly().getId(), WelcomeMessage.getBotStaffMessage());
-							}
-						}
-		            }
-		        });
-//				if (!WelcomeMessage.getBotStaffMessage().equals(""))
-//				{
-//					boolean staff = false;
-//					for (int ccg : client.getUninterruptibly().getServerGroups())
-//					{
-//						if (ccg == Config.getBotAdminGroup() || ccg == Config.getBotOwnerGroup())
-//						{
-//							staff = true;
-//							break;
-//						}
-//					}
-//					if (staff)
-//					{
-//						Server.getApi().sendPrivateMessage(client.getUninterruptibly().getId(), WelcomeMessage.getBotStaffMessage());
-//					}
-//				}
-*/			}
+			}
 
 			@Override
 			public void onClientLeave(ClientLeaveEvent leavingClient)
 			{
 				new ClientLeaveHandler(leavingClient);
-/*				ClientInfo goneClient = clientsOnline.remove(leavingClient.getClientId());
-				
-				if (goneClient.getId() == -1 || goneClient.getNickname().equals("") || goneClient == null)
-				{
-					return;
-				}
-				
-				if (Gui.showServerActivity() && (leavingClient.getInvokerName().equals("") || leavingClient.getInvokerName() == null))
-				{
-					System.out.println(Main.timeStamp() + goneClient.getNickname() + " (" + goneClient.getUniqueIdentifier() + ") disconnected from the server.");
-				}	//NEW (
-				else if (Gui.showServerActivity() && !leavingClient.getInvokerName().equals("") && leavingClient.getInvokerName() != null)
-				{
-					String reasonMessage = leavingClient.getReasonMessage();
-					if (reasonMessage.equals("") || reasonMessage == null)
-					{
-						System.out.println(Main.timeStamp() + goneClient.getNickname() + " (" + goneClient.getUniqueIdentifier() + ") was kicked from the server by "
-								+ leavingClient.getInvokerName() + " (" + leavingClient.getInvokerUniqueId() + ") without reason.");
-						//TODO LOG THIS!
-					}
-					else
-					{
-						System.out.println(Main.timeStamp() + goneClient.getNickname() + " (" + goneClient.getUniqueIdentifier() + ") was kicked from the server by "
-								+ leavingClient.getInvokerName() + " (" + leavingClient.getInvokerUniqueId() + ") with the following reason: \n" + leavingClient.getReasonMessage());
-						//TODO And maybe log this, too.
-					}
-				}*/
 			}
 
 			@Override
-			public void onServerEdit(ServerEditedEvent e)
+			public void onServerEdit(ServerEditedEvent editEvent)
 			{
-				System.out.println(Main.timeStamp() + e.getInvokerName() + " (" + e.getInvokerUniqueId() + ") edited the server.");
+				new ServerEditHandler(editEvent);
 			}
 
 			@Override
-			public void onChannelEdit(ChannelEditedEvent e)
+			public void onChannelEdit(ChannelEditedEvent channelEditEvent)
 			{
-				System.out.println(Main.timeStamp() + e.getInvokerName() + " (" + e.getInvokerUniqueId() + ") edited \"" + query.getApi().getChannelInfo(e.getChannelId()).getName() + "\".");
+				new ChannelEditHandler(channelEditEvent);
 			}
 
 			@Override
-			public void onChannelDescriptionChanged(ChannelDescriptionEditedEvent e)
+			public void onChannelDescriptionChanged(ChannelDescriptionEditedEvent cde)
 			{
-				System.out.println(Main.timeStamp() + e.getInvokerName() + " (" + e.getInvokerUniqueId() + ") edited the description for \"" + query.getApi().getChannelInfo(e.getChannelId()).getName() + "\".");
+				new ChannelDescriptionChangeHandler(cde);
 			}
 
 			@Override

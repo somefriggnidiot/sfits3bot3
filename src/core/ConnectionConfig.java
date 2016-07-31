@@ -52,36 +52,38 @@ public class ConnectionConfig
         vsidLabel = new JLabel("Virtual Server ID: ");
         panel.add(vsidLabel, c);
         
+        //TODO: REMOVE DEFAULTS!!!!!!!!!
         c.gridx = inputColumn;
         c.gridy = 0;
         serverAddress = new JTextField(15);
-        serverAddress.setText(Config.getProperty("server_address", ""));
+        serverAddress.setText(Config.getProperty("server_address", "chi01.mainvoice.net"));
         panel.add(serverAddress, c);
         
         c.gridy = 1;
         queryPort = new JTextField(15);
-        queryPort.setText(Config.getProperty("server_query_port", ""));
+        queryPort.setText(Config.getProperty("server_query_port", "10011"));
         panel.add(queryPort, c);
         
         c.gridy = 2;
         queryLoginName = new JTextField(15);
-        queryLoginName.setText(Config.getProperty("server_query_name", ""));
+        queryLoginName.setText(Config.getProperty("server_query_name", "sfibot3"));
         panel.add(queryLoginName, c);
         
         c.gridy = 3;
         queryLoginPass = new JTextField(15);
-        queryLoginPass.setText(Config.getProperty("server_query_pass", ""));
+        queryLoginPass.setText(Config.getProperty("server_query_pass", "wGo31ejj"));
         panel.add(queryLoginPass, c);
         
         c.gridy = 4;
         botName = new JTextField(15);
-        botName.setText(Config.getProperty("bot_name", ""));
+        botName.setText(Config.getProperty("bot_name", "Test Bot"));
         panel.add(botName, c);
         
         c.gridy = 5;
         vsid = new JTextField(15);
-        vsid.setText(Config.getProperty("server_virtual_server_id", ""));
+        vsid.setText(Config.getProperty("server_virtual_server_id", "2015"));
         panel.add(vsid, c);
+        //TODO: Okay, stop removing defaults.
         
         c.gridx = 1;
         c.gridy = 6;

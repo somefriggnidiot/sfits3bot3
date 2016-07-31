@@ -62,8 +62,8 @@ public class Gui {
     	frame.setMinimumSize(new Dimension(800,400));
         
         Gui gui = new Gui();
-        frame.setJMenuBar(gui.createMenuBar());
-        frame.setContentPane(gui.createContentPane());
+        frame.setJMenuBar(Gui.createMenuBar());
+        frame.setContentPane(Gui.createContentPane());
 
         //Display the window.
         frame.pack();
@@ -90,12 +90,16 @@ public class Gui {
         menu = new JMenu("File");
         menu.setMnemonic(KeyEvent.VK_F);
         
-        menu.add(createMenuItem("Clear Console", new ActionListener() {
-        	@Override
-        	public void actionPerformed(ActionEvent e) {
-        		console.setText("");
-        	}
-        }, KeyStroke.getKeyStroke(KeyEvent.VK_C, InputEvent.ALT_MASK)));
+        menu.add(createMenuItem(
+        	"Clear Console", 
+        	new ActionListener() {
+	        	@Override
+	        	public void actionPerformed(ActionEvent e) {
+	        		console.setText("");
+	        	}
+        	}, 
+        	KeyStroke.getKeyStroke(KeyEvent.VK_C, InputEvent.ALT_MASK)
+        ));
         
         menuBar.add(menu);
         
@@ -105,34 +109,43 @@ public class Gui {
         menu = new JMenu("Server");
         menu.setMnemonic(KeyEvent.VK_S);
         
-        menu.add(createMenuItem("Edit Connection Info", new ActionListener() {
-        	@Override
-        	public void actionPerformed(ActionEvent e) {
-        		if(JOptionPane.showConfirmDialog(frame, ConnectionConfig.createServerInfoPanel(), "Connection Information", JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE) == JOptionPane.OK_OPTION) {
-        			ConnectionConfig.updateConfig();
-        			Config.saveConfig();
-        		}
+        menu.add(createMenuItem(
+        	"Edit Connection Info", 
+        	new ActionListener() {
+	        	@Override
+	        	public void actionPerformed(ActionEvent e) {
+	        		if(JOptionPane.showConfirmDialog(frame, ConnectionConfig.createServerInfoPanel(), "Connection Information", JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE) == JOptionPane.OK_OPTION) {
+	        			ConnectionConfig.updateConfig();
+	        			Config.saveConfig();
+	        		}
+	        	}
         	}
-        }));
+        ));
         
-        menu.add(createMenuItem("Connect", new ActionListener() {
-        	@Override
-        	public void actionPerformed(ActionEvent e) {
-        		Server.connect();
+        menu.add(createMenuItem(
+        	"Connect", 
+        	new ActionListener() {
+	        	@Override
+	        	public void actionPerformed(ActionEvent e) {
+	        		Server.connect();
+	        	}
         	}
-        }));
+        ));
         
-        menu.add(createMenuItem("Disconnect", new ActionListener() {
-        	@Override
-        	public void actionPerformed(ActionEvent e) {
-        		if (Server.isConnected()) {
-        			Server.disconnect();
-        			System.out.println(Main.timeStamp() + "Bot disconnected from console.");
-        		} else {
-        			System.out.println(Main.timeStamp() + "Bot is not currently connected to a server.");
-        		}
+        menu.add(createMenuItem(
+        	"Disconnect", 
+        	new ActionListener() {
+	        	@Override
+	        	public void actionPerformed(ActionEvent e) {
+	        		if (Server.isConnected()) {
+	        			Server.disconnect();
+	        			System.out.println(Main.timeStamp() + "Bot disconnected from console.");
+	        		} else {
+	        			System.out.println(Main.timeStamp() + "Bot is not currently connected to a server.");
+	        		}
+	        	}
         	}
-        }));
+        ));
         
         menuBar.add(menu);
         

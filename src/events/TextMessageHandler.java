@@ -30,9 +30,8 @@ public class TextMessageHandler {
 		System.out.println(Main.timeStamp() + " [MESSAGE] " + invokerName + " (" + invokerUid + ") to " + method + ": " + message);
 	}
 	
-	private void logTextMessage() {
+//	private void logTextMessage() {
 		//TODO: Log message.
-	}
-	
+//	}
 	
 }
