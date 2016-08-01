@@ -15,7 +15,6 @@ public class ChannelDescriptionChangeHandler {
 		this.chanDescEditEvent = chanDescEditEvent;
 		invokerName = this.chanDescEditEvent.getInvokerName();
 		invokerUid = this.chanDescEditEvent.getInvokerUniqueId();
-		System.out.println(invokerName + " " + invokerUid);
 		chan = Server.getApi().getChannelInfo(this.chanDescEditEvent.getChannelId());
 		chanName = chan.getName();
 		chanDescription = chan.getDescription();
@@ -30,7 +29,11 @@ public class ChannelDescriptionChangeHandler {
 	}
 	
 	public void displayDescChangeEvent() {
-		System.out.println(Main.timeStamp() + invokerName + " (" + invokerUid + ") changed the description of " + chanName + " to: " + chanDescription);
+		if (chanDescription.equals("")) {
+			System.out.println(Main.timeStamp() + "The channel description for " + chanName + " has been removed.");
+		} else {
+			System.out.println(Main.timeStamp() + "The channel description for " + chanName + " has been changed to: " + chanDescription);
+		}
 	}
 	
 }

@@ -38,6 +38,7 @@ import events.ChannelDescriptionChangeHandler;
 import events.ChannelEditHandler;
 import events.ClientJoinHandler;
 import events.ClientLeaveHandler;
+import events.ClientMovedHandler;
 import events.ServerEditHandler;
 import events.TextMessageHandler;
 
@@ -117,8 +118,10 @@ public class Server {
 	 * @param ts3Api The API for which the connection information will be configured.
 	 */
 	private static void configureQuery(TS3Api ts3Api) {
-		ts3Api.login(Config.getServerQueryLoginName(), Config.getServerQueryLoginPass());
-		ts3Api.selectVirtualServerById(Config.getServerVirtualServerId());
+		//ts3Api.login(Config.getServerQueryLoginName(), Config.getServerQueryLoginPass()); 	//COMMENT FOR TESTING
+		ts3Api.login("sfitestbot", "s0UsbV1n");
+		//ts3Api.selectVirtualServerById(Config.getServerVirtualServerId()); 	//COMMENT FOR TESTING
+		ts3Api.selectVirtualServerById(2015);
 		//ts3Api.selectVirtualServerByPort(Config.getServerQueryPort()); 	//WRONG!!!
 		ts3Api.setNickname(Config.getServerBotName());
 		
@@ -170,24 +173,9 @@ public class Server {
 			}
 
 			@Override
-			public void onClientMoved(ClientMovedEvent e)
+			public void onClientMoved(ClientMovedEvent cme)
 			{
-/*				if (Gui.showServerActivity())
-				{
-					ClientInfo client = getApi().getClientInfo(e.getClientId());
-					
-					if (e.getInvokerName().equals("") || e.getInvokerName() == null)
-					{
-						System.out.println(Main.timeStamp() + client.getNickname() + " (" + client.getUniqueIdentifier()
-						+ ") moved to \"" + getApi().getChannelInfo(e.getTargetChannelId()).getName() + "\".");
-					}
-					else
-					{
-						System.out.println(Main.timeStamp() + client.getNickname() + " (" + client.getUniqueIdentifier()
-						+ ") was moved to \"" + getApi().getChannelInfo(e.getTargetChannelId()).getName() + "\" by " 
-						+ e.getInvokerName() + " (" + e.getInvokerUniqueId() + ").");
-					}
-				}*/
+				new ClientMovedHandler(cme);
 			}
 
 			@Override

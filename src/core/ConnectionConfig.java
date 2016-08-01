@@ -66,12 +66,12 @@ public class ConnectionConfig
         
         c.gridy = 2;
         queryLoginName = new JTextField(15);
-        queryLoginName.setText(Config.getProperty("server_query_name", "sfibot3"));
+        queryLoginName.setText(Config.getProperty("server_query_name", "sfitestbot"));
         panel.add(queryLoginName, c);
         
         c.gridy = 3;
         queryLoginPass = new JTextField(15);
-        queryLoginPass.setText(Config.getProperty("server_query_pass", "wGo31ejj"));
+        queryLoginPass.setText(Config.getProperty("server_query_pass", "s0UsbV1n"));
         panel.add(queryLoginPass, c);
         
         c.gridy = 4;
